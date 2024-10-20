@@ -19,8 +19,8 @@ steps:
 
   # build the component_base image
   - name: "gcr.io/cloud-builders/docker"
-    args: [ "build", "-t", "us-central1-docker.pkg.dev/mlops-poc-vertexai/databydepew-artifact-registry/databydepew/components/component_base:latest",
-            "--cache-from", "us-central1-docker.pkg.dev/mlops-poc-vertexai/databydepew-artifact-registry/databydepew/components/component_base:latest", "." ]
+    args: [ "build", "-t", "us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest",
+            "--cache-from", "us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest", "." ]
     dir: "components/component_base"
     id: "build_component_base"
     waitFor: ["-"]
@@ -31,7 +31,7 @@ steps:
 
   # push the component_base image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "us-central1-docker.pkg.dev/mlops-poc-vertexai/databydepew-artifact-registry/databydepew/components/component_base:latest"]
+    args: ["push", "us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest"]
     dir: "components/component_base"
     id: "push_component_base"
     waitFor: ["build_component_base"]
@@ -63,4 +63,4 @@ steps:
 
 images:
   # custom component images
-  - "us-central1-docker.pkg.dev/mlops-poc-vertexai/databydepew-artifact-registry/databydepew/components/component_base:latest"
+  - "us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest"

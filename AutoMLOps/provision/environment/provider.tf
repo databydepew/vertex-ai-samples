@@ -1,4 +1,3 @@
-#!/bin/bash
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,9 +12,10 @@
 #
 # DISCLAIMER: This code is generated as part of the AutoMLOps output.
 
-# Submit terraform run creating all resources. 
-# ./scripts/provision_resources.sh state_bucket to create the state bucket.
-# ./scripts/provision_resources.sh environment to create the resources.
-terraform -chdir=AutoMLOps/provision/$1 init
-terraform -chdir=AutoMLOps/provision/$1 validate
-terraform -chdir=AutoMLOps/provision/$1 apply -auto-approve
+provider "google" {
+  credentials = var.provision_credentials_key
+  project     = var.project_id
+}
+
+provider "google-beta" {
+}

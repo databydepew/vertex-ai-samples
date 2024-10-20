@@ -89,7 +89,7 @@ def deploy_model(
 
     print(f"Model  deployed to endpoint.")
 
-@AutoMLOps.pipeline(name='automlops-pipeline', description='This is an optional description')
+@AutoMLOps.pipeline #(name='automlops-pipeline', description='This is an optional description')
 def pipeline(bq_table: str, model_directory: str, data_path: str, project_id: str, region: str):
     create_dataset_task = create_dataset(
         bq_table=bq_table,
@@ -110,25 +110,23 @@ def pipeline(bq_table: str, model_directory: str, data_path: str, project_id: st
     
     
 pipeline_params = {
-    "bq_table": "mlops-poc-vertexai.test_dataset.dry-beans",
-    "model_directory": f"gs://mlops-poc-vertexai-bucket/trained_models/{datetime.datetime.now()}",
-    "data_path": "gs://mlops-poc-vertexai-bucket/data",
-    "project_id": "mlops-poc-vertexai",
-    "region": "us-central1"
-}
+    "bq_table": "poc-databydepew.test_dataset.dry-beans",
+    "model_directory": f"gs://poc-databydepew-bucket/trained_models/{datetime.datetime.now()}",
+    "data_path": "gs://poc-databydepew-bucket/data",
+    "project_id": "poc-databydepew",
+    "region": "us-central1"}
 
 
-AutoMLOps.generate(project_id="mlops-poc-vertexai",
-
-                    pipeline_params=pipeline_params,
+AutoMLOps.generate(project_id="poc-databydepew",
                     use_ci=True,
+                    pipeline_params=pipeline_params,
                     naming_prefix="databydepew",
-                    schedule_pattern="59 11 * * 0",
-                    source_repo_type="github",
-                    source_repo_name="mlops-poc-vertexai",
-                    source_repo_branch="develop",
-                    provisioning_framework="gcloud")
+                    provisioning_framework="terraform",
+                    source_repo_type = "github",
+                    source_repo_name="databydepew/vertex-ai-samples",
+                    source_repo_branch= "automlops")
 
 
 
-# AutoMLOps.provision()
+AutoMLOps.provision()
+AutoMLOps.deploy()

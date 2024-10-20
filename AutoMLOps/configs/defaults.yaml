@@ -21,31 +21,31 @@ gcp:
   build_trigger_location: us-central1
   build_trigger_name: databydepew-build-trigger
   naming_prefix: databydepew
-  pipeline_job_runner_service_account: vertex-pipelines@mlops-poc-vertexai.iam.gserviceaccount.com
+  pipeline_job_runner_service_account: vertex-pipelines@poc-databydepew.iam.gserviceaccount.com
   pipeline_job_submission_service_location: us-central1
   pipeline_job_submission_service_name: databydepew-job-submission-svc
   pipeline_job_submission_service_type: cloud-functions
-  project_id: mlops-poc-vertexai
+  project_id: poc-databydepew
   setup_model_monitoring: false
   pubsub_topic_name: databydepew-queueing-svc
   schedule_location: us-central1
   schedule_name: databydepew-schedule
-  schedule_pattern: 59 11 * * 0
-  source_repository_branch: develop
-  source_repository_name: mlops-poc-vertexai
+  schedule_pattern: No Schedule Specified
+  source_repository_branch: automlops
+  source_repository_name: databydepew/vertex-ai-samples
   source_repository_type: github
   storage_bucket_location: us-central1
-  storage_bucket_name: mlops-poc-vertexai-databydepew-bucket
+  storage_bucket_name: poc-databydepew-databydepew-bucket
   vpc_connector: No VPC Specified
 pipelines:
-  gs_pipeline_job_spec_path: gs://mlops-poc-vertexai-databydepew-bucket/pipeline_root/databydepew/pipeline_job.yaml
+  gs_pipeline_job_spec_path: gs://poc-databydepew-databydepew-bucket/pipeline_root/databydepew/pipeline_job.yaml
   parameter_values_path: pipelines/runtime_parameters/pipeline_parameter_values.json
   pipeline_component_directory: components
   pipeline_job_spec_path: scripts/pipeline_spec/pipeline_job.yaml
   pipeline_region: us-central1
-  pipeline_storage_path: gs://mlops-poc-vertexai-databydepew-bucket/pipeline_root
+  pipeline_storage_path: gs://poc-databydepew-databydepew-bucket/pipeline_root
 tooling:
   deployment_framework: cloud-build
-  provisioning_framework: gcloud
+  provisioning_framework: terraform
   orchestration_framework: kfp
   use_ci: true

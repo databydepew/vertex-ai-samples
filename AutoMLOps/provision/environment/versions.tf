@@ -1,4 +1,3 @@
-#!/bin/bash
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,9 +12,20 @@
 #
 # DISCLAIMER: This code is generated as part of the AutoMLOps output.
 
-# Submit terraform run creating all resources. 
-# ./scripts/provision_resources.sh state_bucket to create the state bucket.
-# ./scripts/provision_resources.sh environment to create the resources.
-terraform -chdir=AutoMLOps/provision/$1 init
-terraform -chdir=AutoMLOps/provision/$1 validate
-terraform -chdir=AutoMLOps/provision/$1 apply -auto-approve
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "< 5.0"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "< 5.0"
+    }
+  }
+  backend "gcs" {
+    bucket =  "poc-databydepew-databydepew-bucket-tfstate"
+    prefix = "terraform/state"
+  }
+}

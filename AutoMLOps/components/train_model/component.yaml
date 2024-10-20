@@ -34,7 +34,7 @@ deploymentSpec:
         command:
         - python3
         - /pipelines/component/src/train_model.py
-        image: us-central1-docker.pkg.dev/mlops-poc-vertexai/databydepew-artifact-registry/databydepew/components/component_base:latest
+        image: us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest
 pipelineInfo:
   name: train-model
 root:

@@ -47,7 +47,6 @@ def create_training_pipeline(pipeline_job_spec_path: str):
 
     @dsl.pipeline(
         name='automlops-pipeline',
-        description='This is an optional description',
     )
     def pipeline(bq_table: str, model_directory: str, data_path: str, project_id: str, region: str):
         create_dataset_task = create_dataset(
