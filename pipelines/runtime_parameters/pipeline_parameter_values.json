@@ -1,0 +1,8 @@
+{
+    "bq_table": "poc-databydepew.test_dataset.dry-beans",
+    "model_directory": "gs://poc-databydepew-bucket/trained_models/2024-10-20 16:10:14.064011",
+    "data_path": "gs://poc-databydepew-bucket/data",
+    "project_id": "poc-databydepew",
+    "region": "us-central1",
+    "gs_pipeline_spec_path": "gs://poc-databydepew-databydepew-bucket/pipeline_root/databydepew/pipeline_job.yaml"
+}
