@@ -1,0 +1,8 @@
+{
+    "bq_table": "mlops-poc-vertexai.test_dataset.dry-beans",
+    "model_directory": "gs://mlops-poc-vertexai-bucket/trained_models/2024-10-20 14:03:05.203692",
+    "data_path": "gs://mlops-poc-vertexai-bucket/data",
+    "project_id": "mlops-poc-vertexai",
+    "region": "us-central1",
+    "gs_pipeline_spec_path": "gs://mlops-poc-vertexai-databydepew-bucket/pipeline_root/databydepew/pipeline_job.yaml"
+}
