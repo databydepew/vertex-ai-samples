@@ -17,10 +17,10 @@ components:
     inputDefinitions:
       parameters:
         bq_table:
-          description: The source BigQuery table.
+          description: The source biquery table.
           parameterType: STRING
         data_path:
-          description: The GCS location to write the CSV.
+          description: The gcs location to write the csv.
           parameterType: STRING
         project_id:
           description: The project ID.
@@ -37,7 +37,7 @@ deploymentSpec:
         command:
         - python3
         - /pipelines/component/src/create_dataset.py
-        image: us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest
+        image: us-central1-docker.pkg.dev/sandbox-qarik/dry-beans-dt-artifact-registry/dry-beans-dt/components/component_base:latest
 pipelineInfo:
   name: create-dataset
 root:
@@ -61,13 +61,13 @@ root:
   inputDefinitions:
     parameters:
       bq_table:
-        description: The source BigQuery table.
+        description: The source biquery table.
         parameterType: STRING
       data_path:
-        description: The GCS location to write the CSV.
+        description: The gcs location to write the csv.
         parameterType: STRING
       project_id:
         description: The project ID.
         parameterType: STRING
 schemaVersion: 2.1.0
-sdkVersion: kfp-2.9.0
+sdkVersion: kfp-2.7.0

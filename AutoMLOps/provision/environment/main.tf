@@ -87,3 +87,17 @@ resource "google_cloudfunctions_function" "pipeline_job_submission_service" {
   depends_on            = [google_artifact_registry_repository.artifact_registry, google_pubsub_topic.pubsub_topic]
 }
 
+
+# Create Cloud Scheduler Job
+resource "google_cloud_scheduler_job" "scheduler_job" {
+  project       = var.project_id
+  region        = var.schedule_location
+  name          = var.schedule_name
+  schedule      = var.schedule_pattern
+  pubsub_target {
+    topic_name  = "projects/${var.project_id}/topics/${var.pubsub_topic_name}"
+    data        = base64encode(file("../../pipelines/runtime_parameters/pipeline_parameter_values.json"))    
+  }
+
+  depends_on    = [google_pubsub_topic.pubsub_topic]
+}

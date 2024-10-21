@@ -24,24 +24,51 @@ from typing import *
 def deploy_model(
     model_directory: str,
     project_id: str,
-    region: str,
+    region: str
 ):
+    """Custom component that trains a decision tree on the training data.
+
+    Args:
+        model_directory: GS location of saved model.
+        project_id: Project_id.
+        region: Region.
+    """
     from google.cloud import aiplatform
-    # Initialize the AI Platform
+
     aiplatform.init(project=project_id, location=region)
+    # Check if model exists
+    models = aiplatform.Model.list()
+    model_name = 'beans-model'
+    if 'beans-model' in (m.name for m in models):
+        parent_model = model_name
+        model_id = None
+        is_default_version=False
+        version_aliases=['experimental', 'challenger', 'custom-training', 'decision-tree']
+        version_description='challenger version'
+    else:
+        parent_model = None
+        model_id = model_name
+        is_default_version=True
+        version_aliases=['champion', 'custom-training', 'decision-tree']
+        version_description='first version'
 
-    # Create or get the endpoint
-    endpoint = aiplatform.Endpoint.create(display_name=endpoint_display_name)
-
-    # Deploy the model to the endpoint
-    model = aiplatform.Model(model_directory)
-    model.deploy(
-        endpoint=endpoint,
-        display_name="my-model-{}".format(datetime.datetime.now()),
-        traffic_split={"0": 100},  # 100% of the traffic to the new model
+    serving_container = 'us-docker.pkg.dev/vertex-ai/prediction/sklearn-cpu.1-0:latest'
+    uploaded_model = aiplatform.Model.upload(
+        artifact_uri = model_directory,
+        model_id=model_id,
+        display_name=model_name,
+        parent_model=parent_model,
+        is_default_version=is_default_version,
+        version_aliases=version_aliases,
+        version_description=version_description,
+        serving_container_image_uri=serving_container,
+        serving_container_ports=[8080],
+        labels={'created_by': 'automlops-team'},
     )
 
-    print(f"Model  deployed to endpoint.")
+    endpoint = uploaded_model.deploy(
+        machine_type='n1-standard-4',
+        deployed_model_display_name='deployed-beans-model')
 
 def main():
     """Main executor."""

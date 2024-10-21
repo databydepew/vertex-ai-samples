@@ -2,6 +2,8 @@
 import datetime
 
 from google_cloud_automlops import AutoMLOps
+from google.cloud import storage
+from kfp.v2.dsl import component, Input, Output, Dataset, Artifact
 
 @AutoMLOps.component
 def train_model(model_directory: str, data_path: str):
@@ -42,9 +44,35 @@ def train_model(model_directory: str, data_path: str):
     model.save_model(f"{model_directory}/xgboost_model.json")
     print(f"Model trained and saved to {model_directory}/xgboost_model.json.")
 
+@AutoMLOps.component
+def create_dataset_from_gcs(
+    gcs_csv_uri: str, 
+    project_id: str, 
+    region: str, 
+    display_name: str, 
+    dataset: Output[Dataset]
+    ):
+    from google.cloud import storage
+    from google.cloud import aiplatform
+    """Pipeline component to create a Vertex AI Dataset from a CSV in GCS."""
+    
+    # Initialize Vertex AI
+    aiplatform.init(project=project_id, location=region)
+    
+    # Create a tabular dataset with the CSV source
+    dataset_obj = aiplatform.TabularDataset.create(
+        display_name=display_name,
+        gcs_source=[gcs_csv_uri],
+    )
+    
+    # Output dataset information
+    dataset.uri = dataset_obj.resource_name
+    print(f"Dataset created: {dataset.uri}")
+
+
 
 @AutoMLOps.component
-def create_dataset(bq_table: str, data_path: str, project_id: str):
+def create_dataset_from_bq(bq_table: str, data_path: str, project_id: str):
     """Custom component that takes in a BigQuery table and writes it to GCS.
     
     Args:
@@ -71,6 +99,7 @@ def deploy_model(
     model_directory: str,
     project_id: str,
     region: str,
+    endpoint_display_name: str,
 ):
     from google.cloud import aiplatform
     # Initialize the AI Platform
@@ -91,7 +120,7 @@ def deploy_model(
 
 @AutoMLOps.pipeline #(name='automlops-pipeline', description='This is an optional description')
 def pipeline(bq_table: str, model_directory: str, data_path: str, project_id: str, region: str):
-    create_dataset_task = create_dataset(
+    create_dataset_task = create_dataset_from_bq(
         bq_table=bq_table,
         data_path=data_path,
         project_id=project_id
@@ -107,6 +136,10 @@ def pipeline(bq_table: str, model_directory: str, data_path: str, project_id: st
         project_id=project_id,
         region=region
     ).after(train_model_task)
+    
+    return {"create_dataset_task": create_dataset_task,
+            "train_model_task": train_model_task,
+            "deploy_model_task": deploy_model_task}
     
     
 pipeline_params = {

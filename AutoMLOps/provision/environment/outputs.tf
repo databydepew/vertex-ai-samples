@@ -47,3 +47,13 @@ output "create_cloud_function" {
   description = "All outputs of the created \"google_cloudfunctions_function\" resource."
   value       = google_cloudfunctions_function.pipeline_job_submission_service
 }
+
+output "create_cloud_scheduler_name" {
+  description = "The name of the job created"
+  value       = google_cloud_scheduler_job.scheduler_job.name
+}
+
+output "create_cloud_scheduler_job" {
+  description = "The Cloud Scheduler job instance"
+  value       = google_cloud_scheduler_job.scheduler_job
+}

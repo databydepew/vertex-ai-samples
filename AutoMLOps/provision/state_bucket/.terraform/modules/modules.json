@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"google_project_service","Source":"registry.terraform.io/terraform-google-modules/project-factory/google//modules/project_services","Version":"14.1.0","Dir":".terraform/modules/google_project_service/modules/project_services"}]}

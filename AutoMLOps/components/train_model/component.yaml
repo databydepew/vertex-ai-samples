@@ -17,10 +17,10 @@ components:
     inputDefinitions:
       parameters:
         data_path:
-          description: The GCS location of the training data.
+          description: GS location where the training data.
           parameterType: STRING
         model_directory:
-          description: The directory to save the trained model.
+          description: GS location of saved model.
           parameterType: STRING
 deploymentSpec:
   executors:
@@ -34,7 +34,7 @@ deploymentSpec:
         command:
         - python3
         - /pipelines/component/src/train_model.py
-        image: us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest
+        image: us-central1-docker.pkg.dev/sandbox-qarik/dry-beans-dt-artifact-registry/dry-beans-dt/components/component_base:latest
 pipelineInfo:
   name: train-model
 root:
@@ -56,10 +56,10 @@ root:
   inputDefinitions:
     parameters:
       data_path:
-        description: The GCS location of the training data.
+        description: GS location where the training data.
         parameterType: STRING
       model_directory:
-        description: The directory to save the trained model.
+        description: GS location of saved model.
         parameterType: STRING
 schemaVersion: 2.1.0
-sdkVersion: kfp-2.9.0
+sdkVersion: kfp-2.7.0

@@ -18,4 +18,4 @@
 # This script should run from the AutoMLOps/ directory
 # Change directory in case this is not the script root.
 
-gcloud pubsub topics publish databydepew-queueing-svc --message "$(cat pipelines/runtime_parameters/pipeline_parameter_values.json)"
+gcloud pubsub topics publish dry-beans-dt-queueing-svc --message "$(cat pipelines/runtime_parameters/pipeline_parameter_values.json)"

@@ -17,10 +17,13 @@ components:
     inputDefinitions:
       parameters:
         model_directory:
+          description: GS location of saved model.
           parameterType: STRING
         project_id:
+          description: Project_id.
           parameterType: STRING
         region:
+          description: Region.
           parameterType: STRING
 deploymentSpec:
   executors:
@@ -34,7 +37,7 @@ deploymentSpec:
         command:
         - python3
         - /pipelines/component/src/deploy_model.py
-        image: us-central1-docker.pkg.dev/poc-databydepew/databydepew-artifact-registry/databydepew/components/component_base:latest
+        image: us-central1-docker.pkg.dev/sandbox-qarik/dry-beans-dt-artifact-registry/dry-beans-dt/components/component_base:latest
 pipelineInfo:
   name: deploy-model
 root:
@@ -58,10 +61,13 @@ root:
   inputDefinitions:
     parameters:
       model_directory:
+        description: GS location of saved model.
         parameterType: STRING
       project_id:
+        description: Project_id.
         parameterType: STRING
       region:
+        description: Region.
         parameterType: STRING
 schemaVersion: 2.1.0
-sdkVersion: kfp-2.9.0
+sdkVersion: kfp-2.7.0

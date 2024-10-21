@@ -24,9 +24,9 @@ import functions_framework
 from google.cloud import aiplatform
 import google.cloud.logging
 
-PROJECT_ID = 'poc-databydepew'
-PIPELINE_ROOT = 'gs://poc-databydepew-databydepew-bucket/pipeline_root'
-PIPELINE_JOB_RUNNER_SERVICE_ACCOUNT = 'vertex-pipelines@poc-databydepew.iam.gserviceaccount.com'
+PROJECT_ID = 'sandbox-qarik'
+PIPELINE_ROOT = 'gs://sandbox-qarik-dry-beans-dt-bucket/pipeline_root'
+PIPELINE_JOB_RUNNER_SERVICE_ACCOUNT = 'vertex-pipelines@sandbox-qarik.iam.gserviceaccount.com'
 
 
 client = google.cloud.logging.Client(project=PROJECT_ID)

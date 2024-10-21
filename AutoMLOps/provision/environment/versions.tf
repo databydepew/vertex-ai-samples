@@ -25,7 +25,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket =  "poc-databydepew-databydepew-bucket-tfstate"
+    bucket =  "sandbox-qarik-dry-beans-dt-bucket-tfstate"
     prefix = "terraform/state"
   }
 }

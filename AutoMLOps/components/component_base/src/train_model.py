@@ -21,43 +21,39 @@ from kfp import dsl
 from kfp.dsl import *
 from typing import *
 
-def train_model(model_directory: str, data_path: str):
-    """Custom component that trains a classification model using XGBoost.
+def train_model(
+    data_path: str,
+    model_directory: str
+):
+    """Custom component that trains a decision tree on the training data.
 
     Args:
-        model_directory: The directory to save the trained model.
-        data_path: The GCS location of the training data.
+        data_path: GS location where the training data.
+        model_directory: GS location of saved model.
     """
-    import pandas as pd
-    import xgboost as xgb
+    from sklearn.tree import DecisionTreeClassifier
     from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score
-    # Load the dataset from GCS
+    import pandas as pd
+    import tensorflow as tf
+    import pickle
+    import os
+
+    def save_model(model, uri):
+        """Saves a model to uri."""
+        with tf.io.gfile.GFile(uri, 'w') as f:
+            pickle.dump(model, f)
+
     df = pd.read_csv(data_path)
+    labels = df.pop('Class').tolist()
+    data = df.values.tolist()
+    x_train, x_test, y_train, y_test = train_test_split(data, labels)
+    skmodel = DecisionTreeClassifier()
+    skmodel.fit(x_train,y_train)
+    score = skmodel.score(x_test,y_test)
+    print('accuracy is:',score)
 
-    # Assume the last column is the target variable
-    X = df.iloc[:, :-1]  # Features
-    y = df.iloc[:, -1]   # Target variable
-
-    # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    # Initialize the XGBoost classifier
-    model = xgb.XGBClassifier(use_label_encoder=False, eval_metric='mlogloss')
-
-    # Train the model
-    model.fit(X_train, y_train)
-
-    # Make predictions on the test set
-    y_pred = model.predict(X_test)
-
-    # Calculate accuracy
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f"Model trained with accuracy: {accuracy:.2f}")
-
-    # Save the trained model
-    model.save_model(f"{model_directory}/xgboost_model.json")
-    print(f"Model trained and saved to {model_directory}/xgboost_model.json.")
+    output_uri = os.path.join(model_directory, 'model.pkl')
+    save_model(skmodel, output_uri)
 
 def main():
     """Main executor."""

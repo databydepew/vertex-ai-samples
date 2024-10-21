@@ -1,45 +1,47 @@
-PROJECT_NUMBER=1043390106779
-gcloud projects add-iam-policy-binding poc-databydepew \
+PROJECT_NUMBER=410722390911
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/storage.admin"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/aiplatform.admin"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/iam.serviceAccountUser"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/iam.serviceAccountTokenCreator"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/resourcemanager.projectIamAdmin"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/cloudfunctions.admin"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/logging.logWriter"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/monitoring.metricWriter"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/cloudbuild.builds.builder"
 
-gcloud projects add-iam-policy-binding poc-databydepew \
+gcloud projects add-iam-policy-binding sandbox-qarik \
 --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
 --role="roles/artifactregistry.admin"
 
-
+gcloud projects add-iam-policy-binding sandbox-qarik \
+--member="serviceAccount:service-${PROJECT_NUMBER}@gcp-sa-aiplatform-cc.iam.gserviceaccount.com" \
+--role="roles/artifactregistry.admin" 
 
 
 # resource "google_project_iam_member" "project_iam_binding" {
